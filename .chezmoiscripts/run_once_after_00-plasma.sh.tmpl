@@ -1,0 +1,22 @@
+#!/bin/bash
+set -euo pipefail
+
+# install packages (idempotent, no prompts)
+sudo pacman -S --needed --noconfirm {{ range .packages.plasma.pacman }}{{ . }} {{ end }}
+
+# keep ly as DM, don't enable sddm
+sudo systemctl disable --now sddm 2>/dev/null || true
+sudo systemctl enable --now ly@tty1.service
+
+# system services
+sudo systemctl enable --now NetworkManager cups power-profiles-daemon
+
+# bluetooth only if hardware present
+if ls /sys/class/bluetooth/ 2>/dev/null | grep -q .; then
+  sudo systemctl enable --now bluetooth
+fi
+
+# user audio services
+systemctl --user enable --now pipewire pipewire-pulse wireplumber
+
+echo "Plasma installed. Reboot and log into 'Plasma (Wayland)'."

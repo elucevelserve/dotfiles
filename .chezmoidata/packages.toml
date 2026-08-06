@@ -1,0 +1,16 @@
+[packages.plasma]
+pacman = [
+  "plasma-desktop",
+  "plasma-wayland-session",
+  "xdg-desktop-portal",
+  "xdg-desktop-portal-kde",
+  "dolphin",
+  "konsole",
+  "pipewire",
+  "pipewire-pulse",
+  "wireplumber",
+  "power-profiles-daemon",
+  "brightnessctl",
+  "noto-fonts",
+  "ttf-nerd-fonts-symbols",
+]
