@@ -1,6 +1,7 @@
 [packages.plasma]
 pacman = [
   "plasma-desktop",
+  "ly",
   "xdg-desktop-portal",
   "xdg-desktop-portal-kde",
   "dolphin",
