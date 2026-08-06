@@ -4,11 +4,8 @@ set -euo pipefail
 # install packages (idempotent, no prompts)
 sudo pacman -S --needed --noconfirm {{ range .packages.plasma.pacman }}{{ . }} {{ end }}
 
-# keep ly as DM, don't enable sddm
+# don't enable sddm
 sudo systemctl disable --now sddm 2>/dev/null || true
-# ly on tty1; disable the default getty on the same tty to avoid conflict
-sudo systemctl enable --now ly@tty1.service
-sudo systemctl disable --now getty@tty1.service 2>/dev/null || true
 
 # system services
 sudo systemctl enable --now NetworkManager cups power-profiles-daemon
@@ -20,5 +17,9 @@ fi
 
 # user audio services
 systemctl --user enable --now pipewire pipewire-pulse wireplumber
+
+# start ly last, after all setup is done; disable the default getty on tty1
+sudo systemctl enable --now ly@tty1.service
+sudo systemctl disable --now getty@tty1.service 2>/dev/null || true
 
 echo "Plasma installed. ly is starting now — log into 'Plasma (Wayland)'."
