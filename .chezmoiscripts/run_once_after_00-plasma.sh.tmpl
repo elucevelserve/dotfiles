@@ -6,7 +6,9 @@ sudo pacman -S --needed --noconfirm {{ range .packages.plasma.pacman }}{{ . }} {
 
 # keep ly as DM, don't enable sddm
 sudo systemctl disable --now sddm 2>/dev/null || true
+# ly on tty1; disable the default getty on the same tty to avoid conflict
 sudo systemctl enable --now ly@tty1.service
+sudo systemctl disable --now getty@tty1.service 2>/dev/null || true
 
 # system services
 sudo systemctl enable --now NetworkManager cups power-profiles-daemon
