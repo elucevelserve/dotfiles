@@ -1,0 +1,12 @@
+[Unit]
+Description=wl-gammarelay DBus gamma daemon
+After=graphical-session.target
+ConditionEnvironment=WAYLAND_DISPLAY
+
+[Service]
+Type=dbus
+BusName=rs.wl-gammarelay
+ExecStart=/usr/bin/wl-gammarelay-rs
+
+[Install]
+WantedBy=niri.service
