@@ -8,7 +8,7 @@ sudo pacman -S --needed --noconfirm {{ range .packages.plasma.pacman }}{{ . }} {
 sudo systemctl disable --now sddm 2>/dev/null || true
 
 # system services
-sudo systemctl enable --now cups power-profiles-daemon
+sudo systemctl enable --now power-profiles-daemon
 
 # user audio services
 systemctl --user enable --now pipewire pipewire-pulse wireplumber
