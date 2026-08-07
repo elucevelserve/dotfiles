@@ -1,6 +1,6 @@
 {{ if .kmonad }}
 (defcfg
-	input  (device-name "AT Translated Set 2 keyboard")
+	input  (device-file "/dev/input/by-path/platform-*-event-kbd")
 	output (uinput-sink "KMonad kbd")
 	fallthrough true
 )
