@@ -1,7 +1,7 @@
-{{- promptStringOnce . "git_user_name"  "Git user name" -}}
-{{- promptStringOnce . "git_user_email" "Git email" -}}
+{{- $git_user_name := promptStringOnce . "git_user_name"  "Git user name" -}}
+{{- $git_user_email := promptStringOnce . "git_user_email" "Git email" -}}
 {{- $kmonad := promptBool "Enable kmonad (Esc/Caps swap) on this machine? [y/N]" false -}}
 [data]
-    git_user_name  = {{ .git_user_name  | quote }}
-    git_user_email = {{ .git_user_email | quote }}
+    git_user_name  = {{ $git_user_name | quote }}
+    git_user_email = {{ $git_user_email | quote }}
     kmonad = {{ $kmonad }}
