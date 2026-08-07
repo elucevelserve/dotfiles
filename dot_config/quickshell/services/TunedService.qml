@@ -3,6 +3,8 @@ import Quickshell
 import QtQuick
 import Quickshell.Io
 
+// Reads and sets power profiles via the net.hadess.PowerProfiles D-Bus interface
+// (provided by tuned-ppd, which KDE's powerdevil also uses).
 Singleton {
   id: root
 
@@ -20,9 +22,10 @@ Singleton {
     if (!name) {
       return
     }
-    setProc.command = ["tuned-adm", "profile", name]
+    setProc.command = ["busctl", "--system", "set-property",
+      "net.hadess.PowerProfiles", "/net/hadess/PowerProfiles",
+      "net.hadess.PowerProfiles", "ActiveProfile", "s", name]
     setProc.running = true
-    currentProfile = name
   }
 
   Component.onCompleted: refresh()
@@ -36,7 +39,8 @@ Singleton {
 
   Process {
     id: readProc
-    command: ["sh", "-c", "tuned-adm active; tuned-adm list"]
+    command: ["sh", "-c",
+      "gdbus call --system --dest net.hadess.PowerProfiles --object-path /net/hadess/PowerProfiles --method org.freedesktop.DBus.Properties.Get net.hadess.PowerProfiles ActiveProfile; gdbus call --system --dest net.hadess.PowerProfiles --object-path /net/hadess/PowerProfiles --method org.freedesktop.DBus.Properties.Get net.hadess.PowerProfiles Profiles"]
 
     stdout: StdioCollector {
       id: readStdout
@@ -44,22 +48,19 @@ Singleton {
 
     onExited: {
       const raw = readStdout.text
-      const m = raw.match(/Current active profile:\s*(.+)/)
-      if (m) {
-        currentProfile = m[1].trim()
+      const active = raw.match(/<'(.*?)'>/)
+      if (active) {
+        currentProfile = active[1]
       }
-      const lm = raw.match(/Available profiles:\s*\n([\s\S]*?)(?:\n\n|$)/)
-      if (lm) {
-        const arr = []
-        const lines = lm[1].split("\n")
-        for (const line of lines) {
-          const m = line.match(/^\s*-\s*(\S+)\s+-\s+(.+)$/)
-          if (m) {
-            arr.push({ name: m[1], description: m[2].trim() })
-          }
+      const arr = []
+      const re = /Profile': <'(.+?)'>/g
+      let m
+      while ((m = re.exec(raw)) !== null) {
+        if (!arr.includes(m[1])) {
+          arr.push(m[1])
         }
-        availableProfiles = arr
       }
+      availableProfiles = arr.map(n => ({ name: n, description: "" }))
     }
   }
 
