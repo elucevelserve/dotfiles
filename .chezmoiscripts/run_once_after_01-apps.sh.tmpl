@@ -4,9 +4,9 @@ set -euo pipefail
 # install config-file apps (idempotent, no prompts)
 sudo pacman -S --needed --noconfirm {{ range .packages.apps.pacman }}{{ . }} {{ end }}
 
-# switch login shell to zsh (usermod bypasses the /etc/shells check that chsh enforces)
+# switch login shell to zsh
 if [ "$SHELL" != "/usr/bin/zsh" ]; then
-  sudo usermod -s /usr/bin/zsh "$USER"
+  chsh -s /usr/bin/zsh
 fi
 
 # install oh-my-zsh (not in official repos)
