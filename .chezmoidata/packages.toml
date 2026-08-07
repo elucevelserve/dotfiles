@@ -17,6 +17,7 @@ pacman = [
 
 [packages.apps]
 pacman = [
+  "git",
   "kitty",
   "neovim",
   "fastfetch",
