@@ -4,7 +4,7 @@ chezmoi-managed dotfiles + provisioning for Arch Linux.
 
 ## Fresh install
 
-The provisioning script (`run_once_after_00-plasma.sh`) installs the desktop environment, display manager, audio, and power stack itself. On a fresh install, only these choices matter — mirrors, locale, keyboard, disk layout, bootloader, and kernel are all orthogonal and can be whatever you prefer.
+The provisioning script (`run_once_after_00-plasma.sh`) installs the desktop environment, display manager, audio, and power stack itself, so install a base system with no desktop components. Whether you use `archinstall` or the manual install guide, keep these choices consistent:
 
 - **Profile:** `Minimal` (do **not** pick a desktop profile — the script installs Plasma).
 - **Audio:** leave unset (the script installs PipeWire).
