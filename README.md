@@ -25,4 +25,3 @@ This prompts for git name/email, applies dotfiles, and runs the Plasma provision
 - The `run_once_` script runs only once per content version. If it fails partway, fix and force a re-run:
   `chezmoi state delete-bucket --bucket=scriptState`
 - `ly` is the display manager (not SDDM). SDDM is disabled and `getty@tty1` is disabled so `ly` owns tty1.
-- Bluetooth is enabled only if hardware is present.
