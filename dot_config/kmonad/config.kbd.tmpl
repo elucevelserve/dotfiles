@@ -1,4 +1,4 @@
-{{ if .kmonad }}
+{{ if (default false .kmonad) }}
 (defcfg
 	input  (device-name "AT Translated Set 2 keyboard")
 	output (uinput-sink "KMonad kbd")
