@@ -8,7 +8,7 @@ The provisioning script (`run_once_after_00-plasma.sh`) installs the desktop env
 
 - **Desktop:** install no desktop environment or profile — the script installs Plasma.
 - **Display server / sound server:** none — the script installs the display manager and PipeWire.
-- **Network:** use `NetworkManager` — the script enables it.
+- **Network:** install and enable `NetworkManager` during the base install.
 - **User:** add your user to the `wheel` group so `sudo` works.
 
 ## After first boot

@@ -8,7 +8,7 @@ sudo pacman -S --needed --noconfirm {{ range .packages.plasma.pacman }}{{ . }} {
 sudo systemctl disable --now sddm 2>/dev/null || true
 
 # system services
-sudo systemctl enable --now NetworkManager cups power-profiles-daemon
+sudo systemctl enable --now cups power-profiles-daemon
 
 # bluetooth only if hardware present
 if ls /sys/class/bluetooth/ 2>/dev/null | grep -q .; then
