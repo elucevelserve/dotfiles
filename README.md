@@ -18,10 +18,24 @@ sudo pacman -S chezmoi
 chezmoi init --apply elucevelserve/dotfiles
 ```
 
-This prompts for git name/email, applies dotfiles, and runs the Plasma provisioning script once (installs Plasma + `ly`, enables services, starts `ly` last). Log into **Plasma (Wayland)** at the `ly` greeter.
+This prompts for git name/email, applies dotfiles, and runs the provisioning scripts once (installs Plasma + `ly` + app packages, enables services, starts `ly` last). Log into **Plasma (Wayland)** at the `ly` greeter.
+
+## After-first-boot provisioning scripts
+
+- `run_once_after_00-plasma.sh` — installs the session stack and starts `ly` (the display manager; `getty@tty1` is disabled so `ly` owns tty1).
+- `run_once_after_01-apps.sh` — installs the config-file apps, switches the login shell to zsh, and installs oh-my-zsh.
+
+## kmonad (optional, one-time)
+
+kmonad swaps **Esc and Caps Lock** and targets internal laptop keyboards. It's an opt-in, manual setup that installs `kmonad` and writes a per-user service:
+
+```bash
+./scripts/setup-kmonad.sh
+```
+
+The resulting `~/.config/kmonad/config.kbd` is **user-owned** and not tracked by chezmoi, so your edits survive `chezmoi update`.
 
 ## Notes
 
-- The `run_once_` script runs only once per content version. If it fails partway, fix and force a re-run:
+- `run_once_` scripts run only once per content version. If one fails partway, fix and force a re-run:
   `chezmoi state delete-bucket --bucket=scriptState`
-- `ly` is the display manager (not SDDM). SDDM is disabled and `getty@tty1` is disabled so `ly` owns tty1.

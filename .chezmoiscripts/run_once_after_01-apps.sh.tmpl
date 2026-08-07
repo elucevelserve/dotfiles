@@ -1,0 +1,17 @@
+#!/bin/bash
+set -euo pipefail
+
+# install config-file apps (idempotent, no prompts)
+sudo pacman -S --needed --noconfirm {{ range .packages.apps.pacman }}{{ . }} {{ end }}
+
+# switch login shell to zsh
+if [ "$SHELL" != "/usr/bin/zsh" ]; then
+  chsh -s /usr/bin/zsh
+fi
+
+# install oh-my-zsh (not in official repos)
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+fi
+
+echo "Apps installed. Shell is zsh + oh-my-zsh."

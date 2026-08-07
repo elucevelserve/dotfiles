@@ -14,3 +14,13 @@ pacman = [
   "noto-fonts",
   "ttf-nerd-fonts-symbols",
 ]
+
+[packages.apps]
+pacman = [
+  "kitty",
+  "neovim",
+  "fastfetch",
+  "zsh",
+  "gh",
+  "oh-my-zsh",
+]
