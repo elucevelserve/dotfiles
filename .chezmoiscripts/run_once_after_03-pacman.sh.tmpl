@@ -1,0 +1,7 @@
+#!/bin/bash
+set -euo pipefail
+
+# set parallel downloads to 20 (idempotent)
+sudo sed -i 's/^#\?ParallelDownloads = .*/ParallelDownloads = 20/' /etc/pacman.conf
+
+echo "ParallelDownloads set to 20 in /etc/pacman.conf."
