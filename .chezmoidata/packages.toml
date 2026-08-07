@@ -27,6 +27,8 @@ pacman = [
 pacman = [
   "niri",
   "quickshell",
+  "wl-mirror",
+  "alsa-utils",
 ]
 
 [packages.apps]
