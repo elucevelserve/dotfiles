@@ -7,7 +7,7 @@ chezmoi-managed dotfiles + provisioning for Arch Linux.
 The provisioning script (`run_once_after_00-plasma.sh`) installs the desktop environment, display manager, audio, and power stack itself, so install a base system with no desktop components. Whether you use `archinstall` or the manual install guide, keep these choices consistent:
 
 - **Desktop:** install no desktop environment or profile — the script installs Plasma.
-- **Display server / sound server:** no display server; audio may be left unset or set to PipeWire — the script installs the display manager and PipeWire (`--needed` makes a pre-installed PipeWire a no-op).
+- **Audio:** may be left unset or set to PipeWire — the script installs PipeWire (`--needed` makes a pre-installed PipeWire a no-op).
 - **Network:** install and enable `NetworkManager` during the base install.
 - **User:** add your user to the `wheel` group so `sudo` works.
 
