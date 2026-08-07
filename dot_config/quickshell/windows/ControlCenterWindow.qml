@@ -392,59 +392,6 @@ Window {
             onTriggered: TunedState.setProfile("performance")
           }
         }
-
-        Row {
-          spacing: 6
-          width: parent.width
-
-          Text {
-            text: "All:"
-            anchors.verticalCenter: parent.verticalCenter
-            color: Theme.textMuted
-            font.family: Theme.fontMainFamily
-            font.pixelSize: Theme.fontSize
-          }
-
-          ComboBox {
-            id: profileCombo
-            width: parent.width - 32
-            model: TunedState.availableProfiles
-            textRole: "name"
-
-            currentIndex: {
-              const arr = TunedState.availableProfiles
-              for (let i = 0; i < arr.length; i++) {
-                if (arr[i].name === TunedState.currentProfile) return i
-              }
-              return -1
-            }
-
-            popup.contentItem: ListView {
-              clip: true
-              implicitHeight: Math.min(contentHeight, 200)
-              model: profileCombo.model
-              currentIndex: profileCombo.highlightedIndex
-
-              delegate: ItemDelegate {
-                width: ListView.view.width
-                text: modelData.name
-                highlighted: ListView.isCurrentItem
-                onClicked: {
-                  TunedState.setProfile(profileCombo.model[index].name)
-                  profileCombo.popup.close()
-                }
-
-                HoverHandler { id: itemHover }
-
-                ToolTip {
-                  text: modelData.description
-                  visible: itemHover.hovered && profileCombo.popup.visible
-                  delay: 400
-                }
-              }
-            }
-          }
-        }
       }
 
       Column {
