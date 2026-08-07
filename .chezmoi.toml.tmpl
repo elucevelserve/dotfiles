@@ -1,5 +1,7 @@
 {{- $name  := promptStringOnce . "git_user_name"  "Git user name" -}}
 {{- $email := promptStringOnce . "git_user_email" "Git email" -}}
+{{- $kmonad := promptBool . "kmonad" "Enable kmonad (Esc/Caps swap) on this machine? [y/N]" false -}}
 [data]
     git_user_name  = {{ $name  | quote }}
     git_user_email = {{ $email | quote }}
+    kmonad = {{ $kmonad }}

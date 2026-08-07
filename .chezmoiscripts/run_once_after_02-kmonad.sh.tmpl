@@ -1,0 +1,25 @@
+#!/bin/bash
+set -euo pipefail
+{{ if .kmonad }}
+sudo pacman -S --needed --noconfirm kmonad
+sudo usermod -aG input,uinput "$USER"
+
+mkdir -p ~/.config/systemd/user
+cat > ~/.config/systemd/user/kmonad.service <<'EOF'
+[Unit]
+Description=KMonad keyboard config
+
+[Service]
+Restart=always
+RestartSec=3
+ExecStart=/usr/bin/kmonad %h/.config/kmonad/config.kbd
+Nice=-20
+
+[Install]
+WantedBy=default.target
+EOF
+
+systemctl --user daemon-reload
+systemctl --user enable --now kmonad.service
+echo "kmonad enabled (Esc/Caps swapped)."
+{{ end }}
