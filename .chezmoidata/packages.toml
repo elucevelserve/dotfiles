@@ -1,18 +1,32 @@
 [packages.plasma]
 pacman = [
   "plasma-desktop",
-  "ly",
-  "xdg-desktop-portal",
-  "xdg-desktop-portal-kde",
   "dolphin",
   "konsole",
+  "breeze-gtk",
+  "kde-gtk-config",
+  "plasma-nm",
+  "plasma-pa",
+  "spectacle",
+]
+
+[packages.core]
+pacman = [
+  "ly",
+  "xdg-desktop-portal",
+  "tuned-ppd",
   "pipewire",
   "pipewire-pulse",
   "wireplumber",
-  "power-profiles-daemon",
   "brightnessctl",
   "noto-fonts",
   "ttf-nerd-fonts-symbols",
+]
+
+[packages.niri]
+pacman = [
+  "niri",
+  "quickshell",
 ]
 
 [packages.apps]

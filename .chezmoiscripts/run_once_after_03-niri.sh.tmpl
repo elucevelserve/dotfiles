@@ -1,0 +1,7 @@
+#!/bin/bash
+set -euo pipefail
+
+# install niri session (idempotent, no prompts)
+sudo pacman -S --needed --noconfirm {{ range .packages.niri.pacman }}{{ . }} {{ end }}
+
+echo "niri installed."
