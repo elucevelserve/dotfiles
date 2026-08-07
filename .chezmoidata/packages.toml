@@ -29,6 +29,8 @@ pacman = [
   "quickshell",
   "wl-mirror",
   "alsa-utils",
+  "fuzzel",
+  "playerctl",
 ]
 
 [packages.apps]
