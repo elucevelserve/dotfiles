@@ -21,6 +21,5 @@ pacman = [
   "neovim",
   "fastfetch",
   "zsh",
-  "gh",
-  "oh-my-zsh",
+  "github-cli",
 ]
