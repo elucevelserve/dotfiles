@@ -3,8 +3,7 @@ set -euo pipefail
 {{ if .kmonad }}
 sudo pacman -S --needed --noconfirm kmonad
 
-# kmonad's udev rule references the uinput group, but the package never creates
-# it; -f is idempotent so this succeeds whether or not the group exists
+# kmonad's udev rule references the uinput group, but the package never creates it
 sudo groupadd -f uinput
 sudo usermod -aG input,uinput "$USER"
 
