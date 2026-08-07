@@ -1,6 +1,6 @@
 #!/bin/bash
 set -euo pipefail
-{{ if (default false .kmonad) }}
+{{ if .kmonad }}
 sudo pacman -S --needed --noconfirm kmonad
 sudo usermod -aG input,uinput "$USER"
 
