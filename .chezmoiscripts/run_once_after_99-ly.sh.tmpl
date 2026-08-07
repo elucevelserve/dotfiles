@@ -1,0 +1,8 @@
+#!/bin/bash
+set -euo pipefail
+
+# start ly after all other setup is done; disable the default getty on tty1
+sudo systemctl enable --now ly@tty1.service
+sudo systemctl disable --now getty@tty1.service 2>/dev/null || true
+
+echo "ly is starting now — log into 'Plasma (Wayland)'."
