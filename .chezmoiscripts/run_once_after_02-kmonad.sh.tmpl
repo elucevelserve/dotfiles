@@ -2,6 +2,10 @@
 set -euo pipefail
 {{ if .kmonad }}
 sudo pacman -S --needed --noconfirm kmonad
+
+# kmonad's udev rule references the uinput group, but the package never creates
+# it; -f is idempotent so this succeeds whether or not the group exists
+sudo groupadd -f uinput
 sudo usermod -aG input,uinput "$USER"
 
 mkdir -p ~/.config/systemd/user
@@ -21,5 +25,5 @@ EOF
 
 systemctl --user daemon-reload
 systemctl --user enable --now kmonad.service
-echo "kmonad enabled (Esc/Caps swapped)."
+echo "kmonad enabled (Esc/Caps swapped). Re-login for the uinput group to apply."
 {{ end }}
