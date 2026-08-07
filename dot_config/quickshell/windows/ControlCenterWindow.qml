@@ -369,11 +369,11 @@ Window {
           spacing: 2
 
           TabButton {
-            text: "Power Saver"
+            text: "Powersave"
             implicitWidth: 96
             implicitHeight: 36
-            active: TunedState.currentProfile === "power-saver"
-            onTriggered: TunedState.setProfile("power-saver")
+            active: TunedState.currentProfile === "powersave"
+            onTriggered: TunedState.setProfile("powersave")
           }
 
           TabButton {
@@ -388,8 +388,28 @@ Window {
             text: "Performance"
             implicitWidth: 96
             implicitHeight: 36
-            active: TunedState.currentProfile === "performance"
-            onTriggered: TunedState.setProfile("performance")
+            active: TunedState.currentProfile === "throughput-performance"
+            onTriggered: TunedState.setProfile("throughput-performance")
+          }
+        }
+
+        Row {
+          spacing: 4
+
+          TabButton {
+            text: "Battery"
+            implicitWidth: 96
+            implicitHeight: 36
+            active: TunedState.currentProfile === "balanced-battery"
+            onTriggered: TunedState.setProfile("balanced-battery")
+          }
+
+          TabButton {
+            text: "Desktop"
+            implicitWidth: 96
+            implicitHeight: 36
+            active: TunedState.currentProfile === "desktop"
+            onTriggered: TunedState.setProfile("desktop")
           }
         }
 
