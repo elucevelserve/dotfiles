@@ -1,0 +1,11 @@
+#!/bin/bash
+set -euo pipefail
+
+# install oh-my-zsh (not in official repos)
+# Runs before files are applied, so ~/.oh-my-zsh doesn't exist yet and the
+# installer won't refuse. --keep-zshrc stops it clobbering the tracked .zshrc.
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
+fi
+
+echo "oh-my-zsh installed."

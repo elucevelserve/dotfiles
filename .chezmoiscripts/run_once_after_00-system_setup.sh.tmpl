@@ -1,0 +1,15 @@
+#!/bin/bash
+set -euo pipefail
+
+# system services
+sudo systemctl enable --now tuned-ppd
+
+# user audio services
+systemctl --user enable --now pipewire pipewire-pulse wireplumber
+
+# switch login shell to zsh (via sudo: single password flow with built-in retries)
+if [ "$SHELL" != "/usr/bin/zsh" ]; then
+  sudo chsh -s /usr/bin/zsh "$USER"
+fi
+
+echo "System setup complete."

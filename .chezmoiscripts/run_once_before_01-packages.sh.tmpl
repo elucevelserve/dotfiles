@@ -1,0 +1,10 @@
+#!/bin/bash
+set -euo pipefail
+
+# install all packages (idempotent, no prompts)
+sudo pacman -S --needed --noconfirm {{ range .packages.core.pacman }}{{ . }} {{ end }}
+sudo pacman -S --needed --noconfirm {{ range .packages.plasma.pacman }}{{ . }} {{ end }}
+sudo pacman -S --needed --noconfirm {{ range .packages.niri.pacman }}{{ . }} {{ end }}
+sudo pacman -S --needed --noconfirm {{ range .packages.apps.pacman }}{{ . }} {{ end }}
+
+echo "Packages installed."
