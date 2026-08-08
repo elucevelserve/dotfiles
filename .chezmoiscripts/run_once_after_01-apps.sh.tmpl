@@ -21,4 +21,7 @@ if [ ! -f "$HOME/.oh-my-zsh/oh-my-zsh.sh" ]; then
   git -C "$HOME/.oh-my-zsh" checkout -b master origin/master
 fi
 
+# ensure the tracked .zshrc is in place now that oh-my-zsh is installed
+chezmoi apply ~/.zshrc
+
 echo "Apps installed. Shell is zsh + oh-my-zsh."
