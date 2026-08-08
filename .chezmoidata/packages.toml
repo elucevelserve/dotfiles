@@ -31,6 +31,8 @@ pacman = [
   "alsa-utils",
   "fuzzel",
   "playerctl",
+  "ttf-dejavu",
+  "otf-font-awesome",
 ]
 
 [packages.apps]
