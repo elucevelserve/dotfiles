@@ -10,8 +10,15 @@ if [ "$SHELL" != "/usr/bin/zsh" ]; then
 fi
 
 # install oh-my-zsh (not in official repos)
-if [ ! -d "$HOME/.oh-my-zsh" ]; then
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
+# NB: ~/.oh-my-zsh may already exist (chezmoi tracks custom/ for the theme), so
+# the official installer aborts (it refuses if the dir exists). Instead, do
+# what the installer does via git, which works in an existing dir and keeps
+# the tracked custom/ theme intact.
+if [ ! -f "$HOME/.oh-my-zsh/oh-my-zsh.sh" ]; then
+  git init --quiet "$HOME/.oh-my-zsh"
+  git -C "$HOME/.oh-my-zsh" remote add origin https://github.com/ohmyzsh/ohmyzsh.git
+  git -C "$HOME/.oh-my-zsh" fetch --depth=1 origin
+  git -C "$HOME/.oh-my-zsh" checkout -b master origin/master
 fi
 
 echo "Apps installed. Shell is zsh + oh-my-zsh."
