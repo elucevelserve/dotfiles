@@ -72,7 +72,11 @@ ZSH_THEME="gnzh_edit"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
 
-source $ZSH/oh-my-zsh.sh
+# Only load oh-my-zsh if it's installed (avoids login errors on a fresh box
+# before the provisioning script has run)
+if [ -f "$ZSH/oh-my-zsh.sh" ]; then
+  source "$ZSH/oh-my-zsh.sh"
+fi
 
 # User configuration
 
