@@ -1,0 +1,7 @@
+singleton TaskbarViewState 1.0 TaskbarViewState.qml
+singleton FocusedWindowState 1.0 FocusedWindowState.qml
+singleton NotificationState 1.0 NotificationState.qml
+singleton TimeState 1.0 TimeState.qml
+singleton ControlCenterState 1.0 ControlCenterState.qml
+singleton TunedState 1.0 TunedState.qml
+singleton ProjectionState 1.0 ProjectionState.qml

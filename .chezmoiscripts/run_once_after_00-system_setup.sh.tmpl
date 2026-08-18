@@ -1,0 +1,40 @@
+#!/bin/bash
+set -euo pipefail
+
+# system services
+sudo systemctl enable --now tuned-ppd
+
+# docker: group membership + socket activation (dockerd starts on first use;
+# daemon itself NOT enabled — boot hung waiting for it before)
+sudo groupadd -f docker
+sudo usermod -aG docker "$USER"
+sudo systemctl enable --now docker.socket
+
+# avahi: mDNS/DNS-SD discovery (network printers, audio, devices)
+sudo systemctl enable --now avahi-daemon
+
+{{ if .printing }}
+# cups: printing (per archinstall print_service profile)
+sudo systemctl enable --now cups
+{{ end }}
+
+# firewalld: system-config-printer prompts to open IPP/mDNS ports on demand
+sudo systemctl enable --now firewalld
+
+# libvirt: socket activation only — daemon spawns on first virt-manager/virsh
+# connect and exits after 120s idle (ro/admin sockets pulled in via Also=)
+sudo systemctl enable --now libvirtd.socket virtlogd.socket
+
+# nss-mdns: resolve .local hostnames via mDNS (per ArchWiki; keep mdns_minimal
+# authoritative for .local and drop the rest of the chain on NOTFOUND)
+sudo sed -i 's/^hosts:.*/hosts: mymachines mdns_minimal [NOTFOUND=return] resolve [!UNAVAIL=return] files myhostname dns/' /etc/nsswitch.conf
+
+# user audio services
+systemctl --user enable --now pipewire pipewire-pulse wireplumber
+
+# switch login shell to zsh (via sudo: single password flow with built-in retries)
+if [ "$SHELL" != "/usr/bin/zsh" ]; then
+  sudo chsh -s /usr/bin/zsh "$USER"
+fi
+
+echo "System setup complete."

@@ -1,0 +1,89 @@
+[packages.plasma]
+pacman = [
+  "plasma-desktop",
+  "dolphin",
+  "konsole",
+  "breeze-gtk",
+  "kde-gtk-config",
+  "plasma-nm",
+  "plasma-pa",
+  "spectacle",
+  "kwallet-pam",
+  "kscreen",
+  "plasma-systemmonitor",
+  "partitionmanager",
+]
+
+[packages.core]
+pacman = [
+  "base-devel",
+  "ly",
+  "xdg-desktop-portal",
+  "tuned-ppd",
+  "pipewire",
+  "pipewire-pulse",
+  "wireplumber",
+  "brightnessctl",
+  "noto-fonts",
+  "ttf-nerd-fonts-symbols",
+  "inotify-tools",
+  "htop",
+  "flatpak",
+]
+
+[packages.network]
+pacman = [
+  "avahi",
+  "nss-mdns",
+  "firewalld",
+]
+
+[packages.printing]
+pacman = [
+  "cups",
+  "system-config-printer",
+  "cups-pk-helper",
+  "ghostscript",
+]
+
+[packages.niri]
+pacman = [
+  "niri",
+  "quickshell",
+  "wl-mirror",
+  "alsa-utils",
+  "fuzzel",
+  "playerctl",
+  "ttf-dejavu",
+  "otf-font-awesome",
+  "cliphist",
+  "wl-clipboard",
+  "swaylock",
+  "xwayland-satellite",
+  "xdg-desktop-portal-wlr",
+]
+
+[packages.apps]
+pacman = [
+  "git",
+  "kitty",
+  "neovim",
+  "fastfetch",
+  "zsh",
+  "github-cli",
+  "firefox",
+  "opencode",
+  "qbittorrent",
+  "vlc",
+  "hyfetch",
+  "pyenv",
+  "godot",
+  "ollama",
+  "docker",
+  "docker-compose",
+  "kwalletmanager",
+  "libvirt",
+  "virt-manager",
+  "qemu-full",
+  "dnsmasq",
+]

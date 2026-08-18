@@ -1,0 +1,16 @@
+[diff]
+	tool = nvim_difftool
+[difftool "nvim_difftool"]
+	cmd = nvim -c \"packadd nvim.difftool\" -c \"DiffTool $LOCAL $REMOTE\"
+
+[init]
+	defaultBranch = main
+[user]
+	email = {{ .git_user_email | quote }}
+	name = {{ .git_user_name | quote }}
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential

@@ -1,0 +1,31 @@
+#!/bin/bash
+set -euo pipefail
+{{ if .kmonad }}
+sudo pacman -S --needed --noconfirm kmonad
+
+# kmonad needs input/uinput access; the package ships no udev rule, so create one (per kmonad FAQ)
+getent group uinput >/dev/null || sudo groupadd --system uinput
+sudo usermod -aG input,uinput "$USER"
+printf 'KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"\n' | sudo tee /etc/udev/rules.d/50-uinput.rules
+sudo systemctl restart systemd-udevd.service
+sudo modprobe uinput
+
+mkdir -p ~/.config/systemd/user
+cat > ~/.config/systemd/user/kmonad.service <<'EOF'
+[Unit]
+Description=KMonad keyboard config
+
+[Service]
+Restart=always
+RestartSec=3
+ExecStart=/usr/bin/kmonad %h/.config/kmonad/config.kbd
+Nice=-20
+
+[Install]
+WantedBy=default.target
+EOF
+
+systemctl --user daemon-reload
+systemctl --user enable --now kmonad.service
+echo "kmonad enabled (Esc/Caps swapped)."
+{{ end }}

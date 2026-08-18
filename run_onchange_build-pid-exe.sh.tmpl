@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+# {{ sha256sum "dot_config/quickshell/plugins/pid-exe/PidExe.h" }}
+# {{ sha256sum "dot_config/quickshell/plugins/pid-exe/PidExe.cpp" }}
+# {{ sha256sum "dot_config/quickshell/plugins/pid-exe/plugin.cpp" }}
+# {{ sha256sum "dot_config/quickshell/plugins/pid-exe/qmldir" }}
+# {{ sha256sum "dot_config/quickshell/plugins/pid-exe/Makefile" }}
+make -C "$HOME/.config/quickshell/plugins/pid-exe" install
