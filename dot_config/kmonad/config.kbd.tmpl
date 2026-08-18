@@ -1,0 +1,17 @@
+{{ if .kmonad }}
+(defcfg
+	input  (device-file "{{ (glob "/dev/input/by-path/*kbd*") | first }}")
+	output (uinput-sink "KMonad kbd")
+	fallthrough true
+)
+
+(defsrc
+	esc
+	caps
+)
+
+(deflayer switch
+	caps
+	esc
+)
+{{ end }}

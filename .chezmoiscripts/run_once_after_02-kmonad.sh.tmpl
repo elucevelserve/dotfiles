@@ -1,0 +1,14 @@
+#!/bin/bash
+set -euo pipefail
+{{ if .kmonad }}
+# kmonad: udev rule for uinput access (unit itself is a managed dotfile)
+sudo pacman -S --needed --noconfirm kmonad
+
+getent group uinput >/dev/null || sudo groupadd --system uinput
+sudo usermod -aG input,uinput "$USER"
+printf 'KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"\n' | sudo tee /etc/udev/rules.d/50-uinput.rules
+sudo modprobe uinput
+
+systemctl --user enable --now kmonad.service
+echo "kmonad enabled (Esc/Caps swapped)."
+{{ end }}

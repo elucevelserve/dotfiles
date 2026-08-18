@@ -1,0 +1,6 @@
+#!/bin/bash
+set -euo pipefail
+
+# ly: disable default getty on tty1
+sudo systemctl enable --now ly@tty1.service
+sudo systemctl disable --now getty@tty1.service 2>/dev/null || true

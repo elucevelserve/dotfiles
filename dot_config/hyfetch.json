@@ -1,0 +1,15 @@
+{
+    "preset": "aroace3",
+    "mode": "rgb",
+    "auto_detect_light_dark": true,
+    "light_dark": "dark",
+    "lightness": 0.5,
+    "color_align": {
+        "mode": "vertical"
+    },
+    "backend": "fastfetch",
+    "args": null,
+    "distro": "arch_small",
+    "pride_month_disable": false,
+    "custom_ascii_path": null
+}

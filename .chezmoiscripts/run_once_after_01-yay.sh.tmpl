@@ -1,0 +1,13 @@
+#!/bin/bash
+set -euo pipefail
+
+# yay bootstrap
+if ! command -v yay >/dev/null 2>&1; then
+  rm -rf /tmp/yay
+  git clone https://aur.archlinux.org/yay.git /tmp/yay
+  ( cd /tmp/yay && makepkg -si --noconfirm )
+fi
+
+yay -S --needed --noconfirm wl-gammarelay-rs onlyoffice-bin
+
+echo "AUR packages installed."

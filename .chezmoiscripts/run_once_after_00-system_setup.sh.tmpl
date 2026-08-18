@@ -1,0 +1,36 @@
+#!/bin/bash
+set -euo pipefail
+
+# tuned-ppd
+sudo systemctl enable --now tuned-ppd
+
+# docker: socket activation
+sudo systemctl enable --now docker.socket
+
+# avahi
+sudo systemctl enable --now avahi-daemon
+
+{{ if .printing }}
+# cups
+sudo systemctl enable --now cups
+{{ end }}
+
+# firewalld
+sudo systemctl enable --now firewalld
+
+# libvirt: socket activation
+sudo systemctl enable --now libvirtd.socket virtlogd.socket
+
+# nss-mdns: resolve .local via mDNS (per ArchWiki)
+grep -q '^hosts:.*mdns_minimal' /etc/nsswitch.conf || \
+  sudo sed -i '/^hosts:/ s/mymachines /mymachines mdns_minimal [NOTFOUND=return] /' /etc/nsswitch.conf
+
+# audio
+systemctl --user enable --now pipewire pipewire-pulse wireplumber
+
+# login shell
+if [ "$SHELL" != "/usr/bin/zsh" ]; then
+  sudo chsh -s /usr/bin/zsh "$USER"
+fi
+
+echo "System setup complete."

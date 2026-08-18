@@ -1,0 +1,9 @@
+#!/bin/bash
+set -euo pipefail
+
+# oh-my-zsh: --keep-zshrc so tracked .zshrc survives
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
+fi
+
+echo "oh-my-zsh installed."
