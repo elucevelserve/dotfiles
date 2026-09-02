@@ -10,10 +10,11 @@ Item {
   id: root
   required property var panelWindow
   implicitWidth: bellText.implicitWidth
-  implicitHeight: bellText.implicitHeight
+  implicitHeight: parent.height
 
   Text {
     id: bellText
+    anchors.verticalCenter: parent.verticalCenter
     color: badgeColor()
     font.family: Theme.fontMainFamily
     font.pixelSize: Theme.fontSize

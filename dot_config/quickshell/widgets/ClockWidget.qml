@@ -9,7 +9,7 @@ import "../services"
 Item {
   id: root
   implicitWidth: clockText.implicitWidth
-  implicitHeight: clockText.implicitHeight
+  implicitHeight: parent.height
   property bool showDateTime: true
   property int viewYear: TimeService.date.getFullYear()
   property int viewMonth: TimeService.date.getMonth()
@@ -33,6 +33,7 @@ Item {
 
   Text {
     id: clockText
+    anchors.verticalCenter: parent.verticalCenter
     text: root.showDateTime ? TimeState.widgetDateTime : TimeState.widgetTime
     color: Theme.textPrimary
     font.family: Theme.fontMainFamily

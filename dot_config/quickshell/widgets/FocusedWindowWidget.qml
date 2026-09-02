@@ -5,10 +5,11 @@ import "../services"
 
 Item {
   implicitWidth: titleText.implicitWidth
-  implicitHeight: titleText.implicitHeight
+  implicitHeight: parent.height
 
   Text {
     id: titleText
+    anchors.verticalCenter: parent.verticalCenter
     color: Theme.textPrimary
     font.family: Theme.fontMainFamily
     font.pixelSize: Theme.fontSize

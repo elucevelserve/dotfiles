@@ -52,6 +52,10 @@ Text {
   }
   font.family: Theme.fontMainFamily
   font.pixelSize: Theme.fontSize
+  // Text implicitHeight is read-only (derived from content); an explicit
+  // height is valid and lets AlignVCenter center the glyphs in the bar.
+  height: parent.height
+  verticalAlignment: Text.AlignVCenter
   textFormat: Text.RichText
 
   function batteryIcon(percent) {

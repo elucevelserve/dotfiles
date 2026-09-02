@@ -29,6 +29,7 @@ Scope {
 
       implicitHeight: Theme.barHeight
 
+      // Rows span the full bar height so widgets get full-height click areas.
       Row {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
@@ -40,7 +41,8 @@ Scope {
       }
 
       Row {
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
 
         FocusedWindowWidget {
@@ -48,7 +50,8 @@ Scope {
       }
 
       Row {
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
         anchors.right: parent.right
         spacing: 12
 

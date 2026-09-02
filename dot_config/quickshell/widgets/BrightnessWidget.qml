@@ -12,10 +12,11 @@ Item {
   visible: BrightnessService.hasBacklight
 
   implicitWidth: brightnessText.implicitWidth
-  implicitHeight: brightnessText.implicitHeight
+  implicitHeight: parent.height
 
   Text {
     id: brightnessText
+    anchors.verticalCenter: parent.verticalCenter
     color: Theme.textPrimary
     font.family: Theme.fontMainFamily
     font.pixelSize: Theme.fontSize

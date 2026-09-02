@@ -33,18 +33,23 @@ Item {
   }
 
   implicitWidth: contentRow.implicitWidth
-  implicitHeight: contentRow.implicitHeight
+  implicitHeight: parent.height
 
   Row {
     id: contentRow
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
     spacing: 4
 
     Item {
+      // Vertical anchors are fine inside a Row (it only manages x).
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
       implicitWidth: outputText.implicitWidth
-      implicitHeight: outputText.implicitHeight
 
       Text {
         id: outputText
+        anchors.verticalCenter: parent.verticalCenter
         color: (VolumeService.sink && VolumeService.sink.audio && VolumeService.sink.audio.muted)
           ? Theme.textMuted
           : Theme.textPrimary
@@ -95,8 +100,9 @@ Item {
     }
 
     Item {
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
       implicitWidth: micText.implicitWidth
-      implicitHeight: micText.implicitHeight
 
       Text {
         id: micText

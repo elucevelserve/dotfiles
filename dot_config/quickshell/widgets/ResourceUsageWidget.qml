@@ -5,10 +5,11 @@ import "../services"
 
 Item {
   implicitWidth: usageRow.implicitWidth
-  implicitHeight: usageRow.implicitHeight
+  implicitHeight: parent.height
 
   Row {
     id: usageRow
+    anchors.verticalCenter: parent.verticalCenter
     spacing: 12
 
     Text {
