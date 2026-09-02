@@ -4,9 +4,12 @@ import "../theme"
 import "../states"
 import "../services"
 
-Item {
+Row {
   id: root
   required property var panelWindow
+
+  height: parent.height
+  spacing: 4
 
   function volumeIcon(percent, muted) {
     if (muted) {
@@ -32,126 +35,88 @@ Item {
     return Theme.iconSpan("&#xf130;")
   }
 
-  implicitWidth: contentRow.implicitWidth
-  implicitHeight: parent.height
+  BarWidget {
+    panelWindow: root.panelWindow
+    acceptedButtons: Qt.LeftButton | Qt.RightButton
 
-  Row {
-    id: contentRow
-    anchors.top: parent.top
-    anchors.bottom: parent.bottom
-    spacing: 4
-
-    Item {
-      // Vertical anchors are fine inside a Row (it only manages x).
-      anchors.top: parent.top
-      anchors.bottom: parent.bottom
-      implicitWidth: outputText.implicitWidth
-
-      Text {
-        id: outputText
-        anchors.verticalCenter: parent.verticalCenter
-        color: (VolumeService.sink && VolumeService.sink.audio && VolumeService.sink.audio.muted)
-          ? Theme.textMuted
-          : Theme.textPrimary
-        font.family: Theme.fontMainFamily
-        font.pixelSize: Theme.fontSize
-        textFormat: Text.RichText
-        text: {
-          if (!VolumeService.ready || !VolumeService.sink || !VolumeService.sink.audio) {
-            return "VOL N/A"
-          }
-
-          const percent = Math.round(VolumeService.sink.audio.volume * 100)
-          const icon = volumeIcon(percent, VolumeService.sink.audio.muted)
-          return percent + "% " + icon
-        }
+    onClicked: mouse => {
+      if (mouse.button === Qt.LeftButton) {
+        ControlCenterState.openAt("volume", root)
+        return
       }
 
-      MouseArea {
-        anchors.fill: parent
-        cursorShape: Qt.PointingHandCursor
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
-
-        onClicked: function(mouse) {
-          if (mouse.button === Qt.LeftButton) {
-            ControlCenterState.openAt("volume", root)
-            return
-          }
-
-          if (mouse.button === Qt.RightButton) {
-            VolumeService.toggleSinkMute()
-          }
-        }
-
-        onWheel: function(wheel) {
-          if (!VolumeService.sink || !VolumeService.sink.audio) {
-            return
-          }
-
-          const delta = wheel.angleDelta.y !== 0 ? wheel.angleDelta.y : wheel.pixelDelta.y
-          if (delta === 0) {
-            return
-          }
-
-          VolumeService.adjustSinkVolume(delta)
-          wheel.accepted = true
-        }
+      if (mouse.button === Qt.RightButton) {
+        VolumeService.toggleSinkMute()
       }
     }
 
-    Item {
-      anchors.top: parent.top
-      anchors.bottom: parent.bottom
-      implicitWidth: micText.implicitWidth
-
-      Text {
-        id: micText
-        color: (VolumeService.source && VolumeService.source.audio && VolumeService.source.audio.muted)
-          ? Theme.textMuted
-          : (VolumeService.micActive ? Theme.micActive : Theme.textPrimary)
-        font.family: Theme.fontMainFamily
-        font.pixelSize: Theme.fontSize
-        textFormat: Text.RichText
-        text: {
-          if (!VolumeService.ready || !VolumeService.source || !VolumeService.source.audio) {
-            return "MIC N/A"
-          }
-
-          const percent = Math.round(VolumeService.source.audio.volume * 100)
-          const icon = micIcon(VolumeService.source.audio.muted)
-          return percent + "% " + icon
-        }
+    onScrolled: delta => {
+      if (!VolumeService.sink || !VolumeService.sink.audio) {
+        return
       }
 
-      MouseArea {
-        anchors.fill: parent
-        cursorShape: Qt.PointingHandCursor
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
+      VolumeService.adjustSinkVolume(delta)
+    }
 
-        onClicked: function(mouse) {
-          if (mouse.button === Qt.LeftButton) {
-            ControlCenterState.openAt("volume", root)
-            return
-          }
-
-          if (mouse.button === Qt.RightButton) {
-            VolumeService.toggleSourceMute()
-          }
+    Text {
+      id: outputText
+      color: (VolumeService.sink && VolumeService.sink.audio && VolumeService.sink.audio.muted)
+        ? Theme.textMuted
+        : Theme.textPrimary
+      font.family: Theme.fontMainFamily
+      font.pixelSize: Theme.fontSize
+      textFormat: Text.RichText
+      text: {
+        if (!VolumeService.ready || !VolumeService.sink || !VolumeService.sink.audio) {
+          return "VOL N/A"
         }
 
-        onWheel: function(wheel) {
-          if (!VolumeService.source || !VolumeService.source.audio) {
-            return
-          }
+        const percent = Math.round(VolumeService.sink.audio.volume * 100)
+        const icon = volumeIcon(percent, VolumeService.sink.audio.muted)
+        return percent + "% " + icon
+      }
+    }
+  }
 
-          const delta = wheel.angleDelta.y !== 0 ? wheel.angleDelta.y : wheel.pixelDelta.y
-          if (delta === 0) {
-            return
-          }
+  BarWidget {
+    panelWindow: root.panelWindow
+    acceptedButtons: Qt.LeftButton | Qt.RightButton
 
-          VolumeService.adjustSourceVolume(delta)
-          wheel.accepted = true
+    onClicked: mouse => {
+      if (mouse.button === Qt.LeftButton) {
+        ControlCenterState.openAt("volume", root)
+        return
+      }
+
+      if (mouse.button === Qt.RightButton) {
+        VolumeService.toggleSourceMute()
+      }
+    }
+
+    onScrolled: delta => {
+      if (!VolumeService.source || !VolumeService.source.audio) {
+        return
+      }
+
+      VolumeService.adjustSourceVolume(delta)
+    }
+
+    Text {
+      id: micText
+      color: (VolumeService.source && VolumeService.source.audio && VolumeService.source.audio.muted)
+        ? Theme.textMuted
+        : (VolumeService.micActive ? Theme.micActive : Theme.textPrimary)
+      font.family: Theme.fontMainFamily
+      font.pixelSize: Theme.fontSize
+      textFormat: Text.RichText
+      text: {
+        if (!VolumeService.ready || !VolumeService.source || !VolumeService.source.audio) {
+          return "MIC N/A"
         }
+
+        const percent = Math.round(VolumeService.source.audio.volume * 100)
+        const icon = micIcon(VolumeService.source.audio.muted)
+        return percent + "% " + icon
       }
     }
   }

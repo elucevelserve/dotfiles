@@ -6,10 +6,10 @@ import "../theme"
 import "../states"
 import "../services"
 
-Item {
+BarWidget {
   id: root
-  implicitWidth: clockText.implicitWidth
-  implicitHeight: parent.height
+  acceptedButtons: Qt.LeftButton | Qt.RightButton
+
   property bool showDateTime: true
   property int viewYear: TimeService.date.getFullYear()
   property int viewMonth: TimeService.date.getMonth()
@@ -31,33 +31,26 @@ Item {
     detailsWindow.y = Math.round(position.y)
   }
 
+  onClicked: mouse => {
+    if (mouse.button === Qt.LeftButton) {
+      if (!detailsWindow.visible) {
+        root.resetCalendarToToday()
+        root.positionDetailsWindow()
+      }
+      detailsWindow.visible = !detailsWindow.visible
+    }
+    if (mouse.button === Qt.RightButton) {
+      root.showDateTime = !root.showDateTime
+    }
+  }
+
   Text {
     id: clockText
-    anchors.verticalCenter: parent.verticalCenter
     text: root.showDateTime ? TimeState.widgetDateTime : TimeState.widgetTime
     color: Theme.textPrimary
     font.family: Theme.fontMainFamily
     font.pixelSize: Theme.fontSize
     font.bold: true
-  }
-
-  MouseArea {
-    anchors.fill: parent
-    cursorShape: Qt.PointingHandCursor
-    acceptedButtons: Qt.LeftButton | Qt.RightButton
-
-    onClicked: function(mouse) {
-      if (mouse.button === Qt.LeftButton) {
-        if (!detailsWindow.visible) {
-          root.resetCalendarToToday()
-          root.positionDetailsWindow()
-        }
-        detailsWindow.visible = !detailsWindow.visible
-      }
-      if (mouse.button === Qt.RightButton) {
-        root.showDateTime = !root.showDateTime
-      }
-    }
   }
 
   Window {

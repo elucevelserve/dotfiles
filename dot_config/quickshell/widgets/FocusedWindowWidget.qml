@@ -3,13 +3,12 @@ import "../theme"
 import "../states"
 import "../services"
 
-Item {
-  implicitWidth: titleText.implicitWidth
-  implicitHeight: parent.height
+BarWidget {
+  id: root
+  interactive: false
 
   Text {
     id: titleText
-    anchors.verticalCenter: parent.verticalCenter
     color: Theme.textPrimary
     font.family: Theme.fontMainFamily
     font.pixelSize: Theme.fontSize

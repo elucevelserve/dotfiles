@@ -3,13 +3,12 @@ import "../theme"
 import "../states"
 import "../services"
 
-Item {
-  implicitWidth: usageRow.implicitWidth
-  implicitHeight: parent.height
+BarWidget {
+  id: root
+  interactive: false
 
   Row {
     id: usageRow
-    anchors.verticalCenter: parent.verticalCenter
     spacing: 12
 
     Text {

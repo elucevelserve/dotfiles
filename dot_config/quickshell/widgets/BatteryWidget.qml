@@ -4,8 +4,9 @@ import Quickshell.Services.UPower
 import "../theme"
 import "../states"
 
-Text {
+BarWidget {
   id: root
+  interactive: false
 
   // Hide on machines without a real laptop battery (VM/desktop): displayDevice
   // is never null but may not be initialized yet, so check ready, then use
@@ -39,25 +40,6 @@ Text {
     return normalized.indexOf("charging") !== -1
   }
 
-  color: {
-    if (root.charging) {
-      return Theme.batteryCharging
-    }
-
-    if (root.percent >= 0 && root.percent < 20) {
-      return Theme.batteryLow
-    }
-
-    return Theme.textPrimary
-  }
-  font.family: Theme.fontMainFamily
-  font.pixelSize: Theme.fontSize
-  // Text implicitHeight is read-only (derived from content); an explicit
-  // height is valid and lets AlignVCenter center the glyphs in the bar.
-  height: parent.height
-  verticalAlignment: Text.AlignVCenter
-  textFormat: Text.RichText
-
   function batteryIcon(percent) {
     if (percent < 20) {
       return Theme.iconSpan("&#xf244;")
@@ -82,12 +64,29 @@ Text {
     return Theme.iconSpan("&#xf0e7;")
   }
 
-  text: {
-    if (root.percent < 0) {
-      return "BAT N/A"
-    }
+  Text {
+    color: {
+      if (root.charging) {
+        return Theme.batteryCharging
+      }
 
-    const chargingSuffix = root.charging ? " " + root.chargingIcon() : ""
-    return root.percent + "% " + root.batteryIcon(root.percent) + chargingSuffix
+      if (root.percent >= 0 && root.percent < 20) {
+        return Theme.batteryLow
+      }
+
+      return Theme.textPrimary
+    }
+    font.family: Theme.fontMainFamily
+    font.pixelSize: Theme.fontSize
+    textFormat: Text.RichText
+
+    text: {
+      if (root.percent < 0) {
+        return "BAT N/A"
+      }
+
+      const chargingSuffix = root.charging ? " " + root.chargingIcon() : ""
+      return root.percent + "% " + root.batteryIcon(root.percent) + chargingSuffix
+    }
   }
 }

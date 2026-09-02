@@ -5,18 +5,16 @@ import "../theme"
 import "../states"
 import "../services"
 
-Item {
+BarWidget {
   id: root
-  required property var panelWindow
 
   visible: BrightnessService.hasBacklight
 
-  implicitWidth: brightnessText.implicitWidth
-  implicitHeight: parent.height
+  onClicked: ControlCenterState.openAt("display", root)
+  onScrolled: delta => BrightnessService.adjustBrightness(delta)
 
   Text {
     id: brightnessText
-    anchors.verticalCenter: parent.verticalCenter
     color: Theme.textPrimary
     font.family: Theme.fontMainFamily
     font.pixelSize: Theme.fontSize
@@ -24,25 +22,5 @@ Item {
     text: BrightnessService.brightnessPercent >= 0
       ? BrightnessService.brightnessPercent + "% " + Theme.iconSpan("&#xf185;")
       : "BRI N/A"
-  }
-
-  MouseArea {
-    anchors.fill: parent
-    cursorShape: Qt.PointingHandCursor
-    acceptedButtons: Qt.LeftButton
-
-    onClicked: {
-      ControlCenterState.openAt("display", root)
-    }
-
-    onWheel: function(wheel) {
-      const delta = wheel.angleDelta.y !== 0 ? wheel.angleDelta.y : wheel.pixelDelta.y
-      if (delta === 0) {
-        return
-      }
-
-      BrightnessService.adjustBrightness(delta)
-      wheel.accepted = true
-    }
   }
 }

@@ -1,20 +1,25 @@
 // NotificationBellWidget.qml
-// Bar bell widget. Left-click toggles the center; right-click toggles DND.
+// Bar bell widget. Left-click toggles the center; right click toggles DND.
 import QtQuick
 import ".."
 import "../services"
 import "../theme"
 import "../states"
 
-Item {
+BarWidget {
   id: root
-  required property var panelWindow
-  implicitWidth: bellText.implicitWidth
-  implicitHeight: parent.height
+  acceptedButtons: Qt.LeftButton | Qt.RightButton
+
+  onClicked: mouse => {
+    if (mouse.button === Qt.LeftButton) {
+      NotificationState.openCenter(root)
+    } else {
+      NotificationState.setDndEnabled(!NotificationState.dndEnabled)
+    }
+  }
 
   Text {
     id: bellText
-    anchors.verticalCenter: parent.verticalCenter
     color: badgeColor()
     font.family: Theme.fontMainFamily
     font.pixelSize: Theme.fontSize
@@ -45,18 +50,5 @@ Item {
       if ((n.urgency || 0) > max) max = n.urgency
     }
     return max
-  }
-
-  MouseArea {
-    anchors.fill: parent
-    cursorShape: Qt.PointingHandCursor
-    acceptedButtons: Qt.LeftButton | Qt.RightButton
-    onClicked: function(mouse) {
-      if (mouse.button === Qt.LeftButton) {
-        NotificationState.openCenter(root)
-      } else {
-        NotificationState.setDndEnabled(!NotificationState.dndEnabled)
-      }
-    }
   }
 }
