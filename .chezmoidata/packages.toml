@@ -12,6 +12,7 @@ pacman = [
   "kscreen",
   "plasma-systemmonitor",
   "partitionmanager",
+  "ark",
 ]
 
 [packages.core]
