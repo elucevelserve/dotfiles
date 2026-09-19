@@ -45,7 +45,7 @@ vim.pack.add{
 }
 
 -- mason installs the servers; enabling is explicit (lspconfig names)
-local servers = { 'clangd', 'html', 'lua_ls' }
+local servers = { 'clangd', 'html', 'lua_ls', 'pylsp' }
 
 require('mason').setup()
 require('mason-lspconfig').setup({
