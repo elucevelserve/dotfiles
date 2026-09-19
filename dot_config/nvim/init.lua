@@ -44,8 +44,16 @@ vim.pack.add{
   { src = 'https://github.com/rafamadriz/friendly-snippets' }
 }
 
+-- mason installs the servers; enabling is explicit (lspconfig names)
+local servers = { 'clangd', 'html', 'lua_ls' }
+
 require('mason').setup()
-require('mason-lspconfig').setup()
+require('mason-lspconfig').setup({
+  automatic_enable = false,
+  ensure_installed = servers,
+})
+
+vim.lsp.enable(servers)
 
 -- completion
 local cmp = require('blink.cmp')
