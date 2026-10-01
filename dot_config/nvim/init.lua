@@ -45,7 +45,7 @@ vim.pack.add{
 }
 
 -- mason installs the servers; enabling is explicit (lspconfig names)
-local servers = { 'clangd', 'html', 'lua_ls', 'pylsp' }
+local servers = { 'clangd', 'html', 'lua_ls', 'pylsp', 'rust_analyzer', 'roslyn_ls' }
 
 require('mason').setup()
 require('mason-lspconfig').setup({
@@ -75,7 +75,7 @@ vim.keymap.set('n', '<leader>fb',      function() Snacks.picker.buffers() end, {
 vim.keymap.set('n', '<leader>sh',      function() Snacks.picker.help() end, { desc = 'Help Pages' })
 
 -- syntax
-require('nvim-treesitter').install({ 'lua', 'vim', 'vimdoc', 'query', 'bash', 'markdown', 'markdown_inline' })
+require('nvim-treesitter').install({ 'lua', 'c_sharp', 'vim', 'vimdoc', 'query', 'bash', 'markdown', 'markdown_inline' })
 vim.api.nvim_create_autocmd('FileType', {
   callback = function(args) pcall(vim.treesitter.start, args.buf) end,
 })
